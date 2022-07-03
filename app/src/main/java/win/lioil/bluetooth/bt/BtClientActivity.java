@@ -84,6 +84,11 @@ public class BtClientActivity extends Activity implements BtBase.Listener, BtRec
     public void sendFile(View view) {
         if (mClient.isConnected(null)) {
             String filePath = mInputFile.getText().toString();
+
+            if (TextUtils.isEmpty(filePath)) { // QM-TEST
+                filePath = "/sdcard/test2.mp4";
+            }
+
             if (TextUtils.isEmpty(filePath) || !new File(filePath).isFile())
                 APP.toast("文件无效", 0);
             else
@@ -108,6 +113,7 @@ public class BtClientActivity extends Activity implements BtBase.Listener, BtRec
                 mTips.setText(msg);
                 break;
             case BtBase.Listener.MSG:
+            case BtBase.Listener.SPEED_TEST: // QM-TEST
                 msg = String.format("\n%s", obj);
                 mLogs.append(msg);
                 break;
